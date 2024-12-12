@@ -32,18 +32,18 @@ const Header = () => {
       }}
       navbarProps={{
         marketingRoutes: [
-          // { path: "/#usecase", name: "Usecase" },
-          // { path: "/#arch", name: "Architecture" },
-          // {
-          //   path: "#",
-          //   name: "More",
-          //   nested: true,
-          //   subRoutes: [
-          //     { path: "/#features", name: "Features" },
-          //     { path: "/#documentation", name: "Documentation" },
-          //     { path: "/#db-design", name: "DB Design" },
-          //   ],
-          // },
+          { path: "/#usecase", name: "Usecase" },
+          { path: "/#arch", name: "Architecture" },
+          {
+            path: "#",
+            name: "More",
+            nested: true,
+            subRoutes: [
+              { path: "/#features", name: "Features" },
+              // { path: "/#documentation", name: "Documentation" },
+              // { path: "/#db-design", name: "DB Design" },
+            ],
+          },
         ],
         NavigationComponent: Link,
         currentPath: hash ? `${path}${hash}` : path,
