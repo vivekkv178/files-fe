@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { Suspense } from "react";
 
 import { FileDataProvider, useFileDataContext } from "./context/context";
 import { AgGridReact } from "ag-grid-react";
@@ -69,7 +69,9 @@ function FileData() {
 const ManageFileData = () => {
   return (
     <FileDataProvider>
-      <FileData />
+      <Suspense>
+        <FileData />
+      </Suspense>
     </FileDataProvider>
   );
 };
