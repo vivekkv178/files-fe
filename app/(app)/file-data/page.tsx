@@ -68,11 +68,11 @@ function FileData() {
 
 const ManageFileData = () => {
   return (
-    <FileDataProvider>
-      <Suspense>
+    <Suspense>
+      <FileDataProvider>
         <FileData />
-      </Suspense>
-    </FileDataProvider>
+      </FileDataProvider>
+    </Suspense>
   );
 };
 
