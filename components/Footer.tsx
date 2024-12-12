@@ -14,7 +14,7 @@ const Footer = () => {
         copyrightText=""
         NavigationComponent={Link}
         socials={{
-          github: "string",
+          github: "https://github.com/vivekkv178/files-fe",
         }}
       />
       <BuiltWith
