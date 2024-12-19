@@ -1,7 +1,6 @@
 "use client";
 
-import React, { Suspense } from "react";
-
+import React, { Suspense, useCallback } from "react";
 import { FileDataProvider, useFileDataContext } from "./context/context";
 import { AgGridReact } from "ag-grid-react";
 import { themeQuartz } from "@ag-grid-community/theming";
@@ -9,6 +8,8 @@ import { Button } from "@vivekkv178/library";
 import { Icon } from "@iconify/react";
 import { FE_ROUTES } from "@/lib/constants";
 import Link from "next/link";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { FILE_DATA_CONSTANTS } from "./utils/constants";
 
 const myTheme = themeQuartz.withParams({
   accentColor: "#212130",
@@ -22,6 +23,10 @@ const myTheme = themeQuartz.withParams({
 
 function FileData() {
   const { commonState } = useFileDataContext();
+
+  const getRowId = useCallback(function (params: any) {
+    return params.data.id;
+  }, []);
 
   return (
     <>
@@ -44,24 +49,62 @@ function FileData() {
           </div>
         </div>
       </div>
-      {commonState?.loading ? (
-        <div className="tw-grid tw-place-items-center">
-          <Icon
-            icon="lucide:loader-circle"
-            className="tw-h-12 tw-w-12 tw-animate-spin"
+
+      <Tabs
+        defaultValue={commonState?.selectedTab}
+        onValueChange={commonState?.setSelectedTab}
+      >
+        <TabsList className="tw-mb-2">
+          <TabsTrigger
+            className="data-[state=active]:tw-bg-white"
+            value={FILE_DATA_CONSTANTS.SERVER_PAGINATION}
+            disabled={commonState?.loading}
+          >
+            Server Pagination
+          </TabsTrigger>
+          <TabsTrigger
+            className="data-[state=active]:tw-bg-white"
+            value={FILE_DATA_CONSTANTS.CLIENT_PAGINATION}
+            disabled={commonState?.loading}
+          >
+            Client Pagination
+          </TabsTrigger>
+        </TabsList>
+      </Tabs>
+
+      {commonState?.gridReady &&
+        commonState?.selectedTab === FILE_DATA_CONSTANTS.SERVER_PAGINATION && (
+          <AgGridReact
+            theme={myTheme}
+            defaultColDef={commonState?.defaultColDef}
+            ref={commonState?.gridRef}
+            pagination={true}
+            columnDefs={commonState?.colDefs}
+            singleClickEdit
+            rowModelType={"infinite"}
+            cacheBlockSize={10}
+            paginationPageSize={10}
+            paginationPageSizeSelector={[10, 20, 50, 100]}
+            maxConcurrentDatasourceRequests={1}
+            getRowId={getRowId}
+            onGridReady={commonState?.onGridReady}
+            loading={commonState?.loading}
           />
-        </div>
-      ) : (
-        <AgGridReact
-          theme={myTheme}
-          defaultColDef={commonState?.defaultColDef}
-          ref={commonState?.gridRef}
-          pagination={true}
-          rowData={commonState?.rowData}
-          columnDefs={commonState?.colDefs}
-          singleClickEdit
-        />
-      )}
+        )}
+
+      {commonState?.gridReady &&
+        commonState?.selectedTab === FILE_DATA_CONSTANTS.CLIENT_PAGINATION && (
+          <AgGridReact
+            theme={myTheme}
+            defaultColDef={commonState?.defaultColDef}
+            ref={commonState?.gridRef}
+            pagination={true}
+            rowData={commonState?.rowData}
+            columnDefs={commonState?.colDefs}
+            singleClickEdit
+            loading={commonState?.loading}
+          />
+        )}
     </>
   );
 }

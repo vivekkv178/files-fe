@@ -14,6 +14,10 @@ type CommonState = {
   rowData: any;
   colDefs: any;
   fileData: any;
+  selectedTab: any;
+  setSelectedTab: any;
+  onGridReady: any;
+  gridReady: boolean;
 };
 
 type FileDataContextType = {

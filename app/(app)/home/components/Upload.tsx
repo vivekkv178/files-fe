@@ -17,13 +17,14 @@ const Upload = () => {
           <Input
             id="csv-file"
             type="file"
+            accept=".csv"
             onChange={commonState?.onFileChange}
           />
         </div>
         <div>
           <Button
             onClick={commonState?.onFileUpload}
-            disabled={commonState?.urlLoading}
+            disabled={commonState?.urlLoading || !commonState?.file}
           >
             {commonState?.urlLoading ? (
               <Icon

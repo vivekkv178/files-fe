@@ -23,6 +23,8 @@ type CommonState = {
   urlLoading: any;
   successDialog: boolean;
   dialogCloseHandler: any;
+  file: File | null;
+  redirectHandler: any;
 };
 
 type ComponentContextType = {

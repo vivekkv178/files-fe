@@ -1,5 +1,3 @@
-/* eslint-disable jsx-a11y/alt-text */
-/* eslint-disable @next/next/no-img-element */
 import React from "react";
 import { Button, CardFooter } from "@vivekkv178/library";
 import { useComponentContext } from "../context/context";
@@ -7,8 +5,6 @@ import { Icon } from "@iconify/react";
 import { Card, CardContent, CardHeader, CardTitle } from "@vivekkv178/library";
 import { MainItem } from "../utils/types";
 import { HOME_CONSTANTS } from "../utils/constants";
-import { useAppDispatch } from "@/lib/reduxHooks";
-import Link from "next/link";
 import { FE_ROUTES } from "@/lib/constants";
 
 type MainProps = {
@@ -17,7 +13,6 @@ type MainProps = {
 
 const MainComp: React.FC<MainProps> = ({ mainItem }) => {
   const { commonState } = useComponentContext();
-  const dispatch = useAppDispatch();
 
   return (
     <Card>
@@ -49,12 +44,17 @@ const MainComp: React.FC<MainProps> = ({ mainItem }) => {
         </div>
       </CardContent>
       <CardFooter className="flex items-center justify-between pt-2">
-        <Link href={`${FE_ROUTES.FILE_DATA}?fileId=${mainItem?._id}`}>
-          <Button>
-            <Icon icon="lucide:file-symlink" className="mr-2 h-4 w-4" />
-            View Data
-          </Button>
-        </Link>
+        <Button
+          disabled={mainItem?.status === HOME_CONSTANTS.STATUS_PROCESSING}
+          onClick={() =>
+            commonState?.redirectHandler(
+              `${FE_ROUTES.FILE_DATA}?fileId=${mainItem?._id}`,
+            )
+          }
+        >
+          <Icon icon="lucide:file-symlink" className="mr-2 h-4 w-4" />
+          View Data
+        </Button>
       </CardFooter>
     </Card>
   );

@@ -5,10 +5,12 @@ import { BE_ROUTES, HttpMethod } from "@/lib/constants";
 import { useAppSelector } from "@/lib/reduxHooks";
 import { replaceUrl } from "@vivekkv178/library";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 
 const useCommonState = () => {
   const authState = useAppSelector((state) => state.auth);
   const api = useApi();
+  const router = useRouter();
 
   const [listLoading, setListLoading] = useState(false);
   const [urlLoading, setUrlLoading] = useState(false);
@@ -137,6 +139,10 @@ const useCommonState = () => {
     listData();
   };
 
+  const redirectHandler = (route: string) => {
+    router.push(route);
+  };
+
   return {
     listLoading,
     mainItems,
@@ -144,10 +150,12 @@ const useCommonState = () => {
     isUploading,
     urlLoading,
     successDialog,
+    file,
     dialogCloseHandler,
     refreshHandler,
     onFileUpload,
     onFileChange,
+    redirectHandler,
   };
 };
 

@@ -1,1 +1,4 @@
-export const constants = {};
+export const FILE_DATA_CONSTANTS = {
+  CLIENT_PAGINATION: "CLIENT_PAGINATION",
+  SERVER_PAGINATION: "SERVER_PAGINATION",
+};

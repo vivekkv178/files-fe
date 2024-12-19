@@ -11,6 +11,7 @@ const useApi = () => {
         method: config.method,
         url: config.url,
         data: config?.data,
+        params: config?.params,
         headers: {
           Authorization: `Bearer ${authState?.user?.stsTokenManager?.accessToken}`,
         },
